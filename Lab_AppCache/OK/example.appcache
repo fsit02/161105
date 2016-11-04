@@ -1,0 +1,10 @@
+﻿CACHE MANIFEST
+# version 110
+index.html
+Page2.html
+
+NETWORK:
+*
+
+FALLBACK:
+/ OnError.html

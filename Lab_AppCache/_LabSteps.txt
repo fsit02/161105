@@ -1,0 +1,111 @@
+Lab: HTML5 Application Cache
+
+
+1.	下載並且安裝 Fiddler
+	<Note> 網址: http://www.telerik.com/fiddler
+
+
+
+
+2.	Application Cache 功能尚未啟用時，先行觀察 HTTP 活動
+
+
+2-1	啟動 Fiddler，
+
+
+2-2	瀏覽 index.htm
+	<Note>請勿使用 https://，不然 fiddler 會偵測不出內容
+
+
+2-3	在 Fiddler 觀察 HTTP 活動。
+
+	<Note> 留意是否有出現任何關於 Cache 字樣的 Header? No.
+
+	<Note> 留意是否只出現 index.html 的下載記錄? Yes.
+
+
+
+
+3.	啟用 HTML5 的 Application Cache 功能
+
+
+3-1	編輯 index.html，針對 <html> 元表加上 manifest 屬性，如下：
+	<html manifest="example.appcache">
+
+
+3-2	編輯 Page3.html，針對 <html> 元表加上 manifest 屬性，如下：
+	<html manifest="example.appcache">
+
+
+3-3	在本資料夾加入一個文字檔，檔名: example.appcache，內容如下:
+CACHE MANIFEST
+# version 100
+index.html
+Page2.html
+
+NETWORK:
+*
+
+FALLBACK:
+/ OnError.html
+# --------------------------------------------------------------------------------
+
+
+
+
+
+4.	試用 HTML5 的 Application Cache 的快取效果
+
+
+4-1	確定 Fiddler 還開著，再以瀏覽器檢視 index.htm 一次，
+	以 Fiddler 觀察 HTTP 活動。
+
+	<Note> 留意是否出現有關於 Cache 字樣的 Header? Yes.
+
+	<Note> 留意是否只出 index.html 的下載記錄? 
+	No, 不止 index.html，
+	還額外下載了 example.appcache、Page2.html、OnError.html 等檔案。
+
+
+4-2	Stop 停止網站伺服器。
+	<Note> 原本應該是 Client 端後來因故處於網路不通的離線狀態，
+	但是本次練習我們改以關閉 Server 端的方式來模擬 Client 端連不上主機的情況。
+
+
+4-3	在 Index.html 點按 Page2 連結，可否看到 Page2.html 的內容? 為什麼?
+	可以看到 Page2.html 的內容，因為 Page2.html 已預先下載過了。
+
+
+4-4	在 Index.html 點按 Page3 連結，可否看到 Page3.html 的內容? 為什麼?
+	沒看到 Page3.html 的內容，但有看到 OnError.html。
+	<Note> 如果在離線之前曾經點按 Page3 連結，Page3.html 的內容會被快取下來以供離線閱覽。
+
+
+4-5	複製網址，關閉並重新啟動瀏覽器，貼入網址，可以看到剛才的 Index.html 的內容嗎?
+	可以。
+
+
+4-6	請想想看，這樣的功能適合怎樣的使用情境呢? 不適合怎樣的使用情境呢?
+
+
+
+
+5.0	版本更新管理
+
+
+5-1	關閉瀏覽器。
+
+5-2	修改 Page2.html，將 Version 1 改成 Version 2，改好之後，確定有存檔。
+
+5-3	重新 Run Project 並且瀏覽 index.htm。
+	 
+5-4	點按 Page2 連結，看到的是 Version 1 還是 Version 2 呢?  Version 1。
+
+5-5	關閉瀏覽器。
+
+5-6	修改 example.appcache，將 # version 100 改成 # version 110，改好之後，確定有存檔。
+
+5-7	重新瀏覽 index.htm
+
+5-8	點按 Page2 連結，看到的是 Version 1 還是 Version 2 呢?  Version 2。
+
