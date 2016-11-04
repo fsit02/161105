@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <script type='text/javascript' src='ajax.js'></script>
+    <title>AJAX Example</title>
+  </head>
+  <body>
+    Your name:<input type="text" name="txtTest" id="txtTest">
+    <input type='button' onclick='MakeRequestSync()' value='Sync'/> 
+    <input type='button' onclick='MakeRequestAsync()' value='Async, AJAX'/> <br>
+    Other data: <input type="text" name="txtOther" id="txtOther"><br>
+    <hr>
+    <div id='ResponseDiv'>
+      This is a div to hold the response.
+    </div>
+  </body>
+  
+<script>
+
+var serverUrl = "https://lab-appdev1226.c9users.io/hello/";
+
+function getXMLHttp()
+{
+  var xmlHttp
+
+  try
+  {
+    //Firefox, Opera 8.0+, Safari
+    xmlHttp = new XMLHttpRequest();
+  }
+  catch(e)
+  {
+    //Internet Explorer
+    try
+    {
+      xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+    }
+    catch(e)
+    {
+      try
+      {
+        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      catch(e)
+      {
+        alert("Your browser does not support AJAX!")
+        return false;
+      }
+    }
+  }
+  return xmlHttp;
+}
+
+function HandleResponse(response)
+{
+  document.getElementById('ResponseDiv').innerHTML = response;
+}
+
+function MakeRequestSync()
+{
+	var xmlHttp = getXMLHttp();
+	  
+	userKeyin = document.getElementById('txtTest').value;
+
+	xmlHttp.open("GET", serverUrl + userKeyin, false);
+	xmlHttp.send(null);
+
+	// HandleResponse(userKeyin);
+	HandleResponse(xmlHttp.responseText);
+}
+
+function MakeRequestAsync()
+{
+  var xmlHttp = getXMLHttp();
+ 
+  xmlHttp.onreadystatechange = function()
+  {
+    if(xmlHttp.readyState == 4)
+    {
+      HandleResponse(xmlHttp.responseText);
+    }
+  }
+  
+  userKeyin = document.getElementById('txtTest').value;
+
+  xmlHttp.open("GET", serverUrl + userKeyin, true);
+  xmlHttp.send(null);
+}
+
+
+</script>
+  
+  
+</html>

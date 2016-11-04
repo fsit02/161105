@@ -1,0 +1,94 @@
+Lab: 上傳檔案到 Server
+
+
+
+
+1.	安裝與執行 Server 程式
+
+
+1.1	滑鼠點按任何資料夾 | Open Terminal Here，依序輸入下列指令並按下 <Enter> 鍵
+
+npm install express
+npm install cors
+npm install body-parser
+npm install multer
+exit
+
+	<Note>
+	完成後，在 Workspace 的 node_modules 資料夾裏頭
+	應該會多出 cors、 express、 body-parser、multer 等資料夾。
+	
+	<Note>
+	如果已進行過之前的練習，可直接安裝 multer 即可。
+
+
+1.2	找出本資料夾的 server.js，點兩下開啟檔案，
+	然後，點按功能表的「> Run」按鈕。
+
+	<Note>
+	請留意螢幕下方藍色區域，第一行應該類似
+	Your code is running at https://lab-appdev1226.c9users.io
+	 將 http://代號.c9users.io 的代號複製下來，等一下會用到。
+
+    
+1.3	瀏覽器連接 http://代號.c9users.io/
+	測試 Server 是否順利執行。
+	
+	<Note>順利的話，會出現 Hello 字樣。
+
+
+
+
+2.	製作上傳檔案的表單
+
+2.1	以 HTML Editor 開啟 Lab_UploadFile.html，
+	請找出並留意 <form> 表單的三個屬性: 
+
+	action="" 
+	method="post" 
+	enctype="multipart/form-data"
+
+
+2.2	將表單的 action 改成 http://代號.c9users.io/admin/inbox，例如:
+	<form action="https://lab-appdev1226.c9users.io/admin/inbox" ...
+
+
+2.3	請找出表單內部一個 name="fileData" 的控制項，請留意其 type 屬性值為 "file"
+	<input type="file" name="fileData" />
+
+
+
+
+3.	檔案受理程式
+
+
+3.1	點兩下 server.js 以編輯器開啟程式檔案，找出 // 步驟三的程式碼
+	並且閱讀程式:
+	
+	(1) /admin/inbox 是路由路徑，對應到剛才 client 端表單的 action
+	
+	(2) multer({dest : './uploads/'})， uploads 是本資料夾的子資料夾，為檔案暫存區。
+	
+	(3) single('fileData')，fileData 是 client 端表單的元件欄位名稱。
+	
+
+3.2	點兩下 server.js，	然後，點按功能表的「> Run」按鈕。
+
+
+
+
+4.	測試程式
+
+
+4.1	以瀏覽器檢視 Lab_UploadFile.html。
+
+
+4.2 在表單選擇一個檔案，例如 files 資料夾的 test.txt。
+
+
+4.3 點按 OK 按鈕，送出表單資料與檔案。
+
+
+4.4	重新整理 uploads 資料夾，看看檔案是否在裏面。
+
+
